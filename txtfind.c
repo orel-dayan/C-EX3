@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <string.h>
+
 #define LINE 256 
 #define WORD 30
+
 int getline_(char s[]);
 int getword(char w[]);
 int substring(char *str1, char *str2);
 int similar(char *s, char *t, int n);
 void print_lines(char *str);
 void print_similar_words(char *str);
+
 
 int main() {
     char word[WORD];
@@ -27,6 +30,12 @@ int main() {
 
 
 //func A
+/**
+ * @brief getline_
+ * 
+ * @param s  character array to hold the input line
+ * @return int  0 if EOF, 1 if empty line, else the length of the line
+ */
 
 int getline_(char s[])
 {
@@ -45,6 +54,13 @@ int getline_(char s[])
     s[i] = '\0';
     return i;
 }
+/**
+ * @brief substring 
+ * 
+ * @param str1  the substring to search for
+ * @param str2   the string to search in
+ * @return int  1 if str1 is a substring of str2, 0 otherwise
+ */
 
 int substring(char *str1, char *str2)
 {
@@ -58,10 +74,16 @@ int substring(char *str1, char *str2)
     }
     return 0; 
 }
+
+/**
+ * @brief print_lines 
+ * 
+ * @param str  the string to search for
+ */
+
 void print_lines(char *str)
 {
     char line[LINE]; // character array to hold the input line
-
     while (getline_(line) > 0)
     {
         if (substring(str, line)){
@@ -71,42 +93,69 @@ void print_lines(char *str)
 }
 
 // func B
+/**
+ * @brief getword 
+ * 
+ * @param w  character array to hold the input word
+ * @return int  0 if EOF, else the length of the word
+ * 
+ */
 int getword(char w[])
 {
-    int c, i;
+    int c, counter; // c is the current character, counter is the number of characters in the word
 
-    for (i = 0; i < WORD - 1 && (c = getchar()) != EOF && c != ' ' && c != '\t' && c != '\n'; ++i)
-        w[i] = c;
-    // Handle empty line
-    if (c == '\n' && i==0)
-        w[i++] = c;
-    w[i] = '\0';
-    return i;
+    for (counter = 0; counter < WORD - 1 && (c = getchar()) != EOF && c != ' ' && c != '\t' && c != '\n'; ++counter)
+        w[counter] = c;
+    
+    if (c == '\n' && counter==0) 
+        w[counter++] = c;
+
+    w[counter] = '\0'; 
+    return counter;
 }
+/**
+ * @brief similar 
+ * 
+ * @param s  the string to search in
+ * @param t  the string to search for
+ * @param n  the number of allowed changes
+ * @return int  1 if s is similar to t, 0 otherwise
+ */
+
 
 int similar(char *s, char *t, int n)
 {
-    int len_s = strlen(s); // length of s
-    int len_t = strlen(t); // length of t
+    int lens = strlen(s); // length of s
+    int lent = strlen(t); // length of t
 
-    if (len_s < len_t || len_t + n < len_s)
-        return 0; 
+    if (lens < lent || lent + n < lens) return 0; 
 
-    int i = 0, j = 0;
-    while (i < len_s && j < len_t)
+    int i, j;
+    for (i = 0, j = 0; i < lens && j < lent;)
     {
-        if (s[i] == t[j])
+        if (s[i] == t[j])//if the characters are equal 
+        {
             j++; 
+        }
+
         i++; 
     }
-    return j == len_t; 
+      
+    return j == lent; 
 }
+
+
+/**
+ * @brief print_similar_words 
+ * 
+ * @param str  the string to search for
+ */
 
 void print_similar_words(char *str) {
     char word[WORD]; 
-    while (getword(word) > 0) { 
-        if (similar(word, str, 1)) { 
-            printf("%s\n", word); 
+    while (getword(word) > 0) {  // get the next word
+        if (similar(word, str, 1)) {  // check if it is similar to str
+            printf("%s\n", word);  // print the word
         }   
     }
 }
