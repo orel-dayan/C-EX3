@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 # define SIZE 50
+/**
+ * @brief printArr
+ * 
+ * @param arr  the array to print
+ * @param size  the size of the array
+ */
 
 void printArr(int *arr, int size)
 {
@@ -11,6 +17,12 @@ void printArr(int *arr, int size)
     }
     printf("\n");
 }
+/**
+ * @brief shift_element
+ * 
+ * @param arr  the array to shift
+ * @param i  the index of the element to shift
+ */
 
 void shift_element(int* arr, int i)
 {
@@ -19,6 +31,12 @@ void shift_element(int* arr, int i)
        *(arr+i-j)=*(arr+i-j-1);
    }
 }
+/**
+ * @brief insertion_sort
+ * 
+ * @param arr  the array to sort
+ * @param len  the length of the array
+ */
 void insertion_sort(int* arr, int len) {
     int count;
    
@@ -41,7 +59,11 @@ void insertion_sort(int* arr, int len) {
         *key=temp;      
     }
 }
-
+/**
+ * @brief main
+ * 
+ * @return int  0 if success 
+ */
 int main()
 {
     int arr[SIZE];
